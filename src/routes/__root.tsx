@@ -78,13 +78,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { name: "description", content: "Resume Builder - Create professional resumes instantly with live preview.
+Just fill in your details, choose a theme, and download as PDF." },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:description", content: "Resume Builder - Create professional resumes instantly with live preview.
+Just fill in your details, choose a theme, and download as PDF." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Lovable App" },
+      { name: "twitter:description", content: "Resume Builder - Create professional resumes instantly with live preview.
+Just fill in your details, choose a theme, and download as PDF." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/MO4TLDc4kQZIIVdLZsAP3aTW0zk1/social-images/social-1782285628963-Screenshot_2026-03-11_001416.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/MO4TLDc4kQZIIVdLZsAP3aTW0zk1/social-images/social-1782285628963-Screenshot_2026-03-11_001416.webp" },
     ],
     links: [
       {
