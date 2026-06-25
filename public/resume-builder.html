@@ -238,7 +238,19 @@
     border-bottom: 3px solid var(--r-primary);
     padding-bottom: 18px;
     margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
   }
+  .r-photo {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--r-accent);
+    box-shadow: 0 6px 18px rgba(15,23,42,.15);
+    flex-shrink: 0;
+  }
+  .r-header-text { flex: 1; min-width: 0; }
   .r-name {
     font-size: 2.2em;
     font-weight: 800;
@@ -262,6 +274,22 @@
   }
   .r-contact span { display: inline-flex; align-items: center; gap: 6px; }
   .r-contact i { color: var(--r-primary); }
+
+  /* Photo upload UI */
+  .photo-upload {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px; border: 1px dashed #c9d3e2; border-radius: 10px;
+    background: #fafbfd;
+  }
+  .photo-preview {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: #e0e7ff center/cover no-repeat;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--primary); font-size: 1.4rem; flex-shrink: 0;
+    border: 2px solid #fff; box-shadow: 0 0 0 1px var(--border);
+  }
+  .photo-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  #photoInput { display: none; }
 
   .r-section { margin-bottom: 22px; }
   .r-section h2 {
