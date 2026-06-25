@@ -668,16 +668,47 @@ document.getElementById('fontDown').addEventListener('click', () => {
   renderPreview();
 });
 
+// Photo upload
+const photoPreview = document.getElementById('photoPreview');
+function updatePhotoPreview() {
+  if (state.photo) {
+    photoPreview.style.backgroundImage = `url("${state.photo}")`;
+    photoPreview.innerHTML = '';
+  } else {
+    photoPreview.style.backgroundImage = '';
+    photoPreview.innerHTML = '<i class="fa-solid fa-user"></i>';
+  }
+}
+document.getElementById('photoInput').addEventListener('change', e => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    state.photo = ev.target.result;
+    updatePhotoPreview();
+    renderPreview();
+  };
+  reader.readAsDataURL(file);
+});
+document.getElementById('removePhoto').addEventListener('click', () => {
+  state.photo = '';
+  document.getElementById('photoInput').value = '';
+  updatePhotoPreview();
+  renderPreview();
+});
+
 // Reset
 document.getElementById('resetBtn').addEventListener('click', () => {
   if (!confirm('Clear all fields and reset the resume?')) return;
   Object.assign(state, {
     fullName:'', jobTitle:'', email:'', phone:'', address:'', summary:'', skills:'',
-    experiences: [], educations: [],
+    experiences: [], educations: [], photo: '',
   });
   ['fullName','jobTitle','email','phone','address','summary','skills'].forEach(id => {
     document.getElementById(id).value = '';
   });
+  document.getElementById('photoInput').value = '';
+  updatePhotoPreview();
   renderExperienceForms();
   renderEducationForms();
   renderPreview();
