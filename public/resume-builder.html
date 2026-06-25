@@ -13,29 +13,31 @@
   /* ============ Base & Reset ============ */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #f4f6fb;
+    --bg: #eef2ff;
     --panel: #ffffff;
     --border: #e3e8f0;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
+    --text: #0f172a;
+    --muted: #64748b;
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
     --danger: #ef4444;
     --success: #10b981;
-    --shadow: 0 4px 16px rgba(15, 23, 42, .06);
-    --radius: 10px;
+    --shadow: 0 8px 28px rgba(79, 70, 229, .10);
+    --radius: 14px;
 
-    /* Resume theme variables (overridden by themes) */
-    --r-primary: #2563eb;
+    --r-primary: #6366f1;
     --r-secondary: #0f172a;
-    --r-accent: #dbeafe;
+    --r-accent: #e0e7ff;
     --r-text: #1f2937;
     --r-muted: #4b5563;
     --r-bg: #ffffff;
   }
   body {
     font-family: 'Inter', system-ui, sans-serif;
-    background: var(--bg);
+    background:
+      radial-gradient(900px 500px at -10% -10%, #c7d2fe 0%, transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, #fbcfe8 0%, transparent 55%),
+      var(--bg);
     color: var(--text);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
@@ -236,7 +238,19 @@
     border-bottom: 3px solid var(--r-primary);
     padding-bottom: 18px;
     margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
   }
+  .r-photo {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--r-accent);
+    box-shadow: 0 6px 18px rgba(15,23,42,.15);
+    flex-shrink: 0;
+  }
+  .r-header-text { flex: 1; min-width: 0; }
   .r-name {
     font-size: 2.2em;
     font-weight: 800;
@@ -260,6 +274,22 @@
   }
   .r-contact span { display: inline-flex; align-items: center; gap: 6px; }
   .r-contact i { color: var(--r-primary); }
+
+  /* Photo upload UI */
+  .photo-upload {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px; border: 1px dashed #c9d3e2; border-radius: 10px;
+    background: #fafbfd;
+  }
+  .photo-preview {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: #e0e7ff center/cover no-repeat;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--primary); font-size: 1.4rem; flex-shrink: 0;
+    border: 2px solid #fff; box-shadow: 0 0 0 1px var(--border);
+  }
+  .photo-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  #photoInput { display: none; }
 
   .r-section { margin-bottom: 22px; }
   .r-section h2 {
@@ -331,6 +361,19 @@
       <!-- Personal -->
       <div class="section">
         <div class="section-title"><i class="fa-solid fa-user"></i> Personal Info</div>
+
+        <div class="field">
+          <label>Profile Picture</label>
+          <div class="photo-upload">
+            <div class="photo-preview" id="photoPreview"><i class="fa-solid fa-user"></i></div>
+            <div class="photo-actions">
+              <label for="photoInput" class="btn btn-sm"><i class="fa-solid fa-upload"></i> Upload</label>
+              <button type="button" class="btn btn-sm btn-danger" id="removePhoto"><i class="fa-solid fa-xmark"></i> Remove</button>
+              <input type="file" id="photoInput" accept="image/*"/>
+            </div>
+          </div>
+        </div>
+
         <div class="field"><label>Full Name</label><input type="text" id="fullName" placeholder="Jane Doe"/></div>
         <div class="field"><label>Job Title / Tagline</label><input type="text" id="jobTitle" placeholder="Senior Product Designer"/></div>
         <div class="grid-2">
@@ -376,9 +419,11 @@
     <div class="toolbar">
       <div class="toolbar-group">
         <span class="toolbar-label">Theme</span>
-        <div class="theme-swatch active" data-theme="blue"    style="background:#2563eb" title="Modern Blue"></div>
+        <div class="theme-swatch active" data-theme="indigo"  style="background:linear-gradient(135deg,#6366f1,#a855f7)" title="Indigo Violet"></div>
+        <div class="theme-swatch"        data-theme="rose"    style="background:linear-gradient(135deg,#e11d48,#f97316)" title="Sunset Rose"></div>
+        <div class="theme-swatch"        data-theme="teal"    style="background:linear-gradient(135deg,#0d9488,#06b6d4)" title="Ocean Teal"></div>
         <div class="theme-swatch"        data-theme="gold"    style="background:#b8860b" title="Elegant Gold"></div>
-        <div class="theme-swatch"        data-theme="dark"    style="background:#111827" title="Minimal Dark"></div>
+        <div class="theme-swatch"        data-theme="dark"    style="background:#111827" title="Midnight Dark"></div>
         <div class="theme-swatch"        data-theme="emerald" style="background:#059669" title="Fresh Emerald"></div>
       </div>
       <div class="toolbar-group">
@@ -413,14 +458,17 @@ const state = {
   experiences: [],   // { id, title, company, start, end, desc }
   educations: [],    // { id, degree, institution, year }
   skills: '',
-  theme: 'blue',
+  theme: 'indigo',
   fontSize: 14,
+  photo: '',
 };
 
 const THEMES = {
-  blue:    { '--r-primary': '#2563eb', '--r-secondary': '#0f172a', '--r-accent': '#dbeafe', '--r-text': '#1f2937', '--r-muted': '#4b5563', '--r-bg': '#ffffff' },
+  indigo:  { '--r-primary': '#6366f1', '--r-secondary': '#1e1b4b', '--r-accent': '#e0e7ff', '--r-text': '#1f2937', '--r-muted': '#4b5563', '--r-bg': '#ffffff' },
+  rose:    { '--r-primary': '#e11d48', '--r-secondary': '#4c0519', '--r-accent': '#ffe4e6', '--r-text': '#1f2937', '--r-muted': '#525252', '--r-bg': '#fffaf7' },
+  teal:    { '--r-primary': '#0d9488', '--r-secondary': '#042f2e', '--r-accent': '#ccfbf1', '--r-text': '#1f2937', '--r-muted': '#475569', '--r-bg': '#ffffff' },
   gold:    { '--r-primary': '#b8860b', '--r-secondary': '#3b2f12', '--r-accent': '#fdf3d1', '--r-text': '#2c2415', '--r-muted': '#6b5a2e', '--r-bg': '#fffdf7' },
-  dark:    { '--r-primary': '#60a5fa', '--r-secondary': '#f8fafc', '--r-accent': '#1e293b', '--r-text': '#e2e8f0', '--r-muted': '#94a3b8', '--r-bg': '#0f172a' },
+  dark:    { '--r-primary': '#a78bfa', '--r-secondary': '#f8fafc', '--r-accent': '#1e293b', '--r-text': '#e2e8f0', '--r-muted': '#94a3b8', '--r-bg': '#0f172a' },
   emerald: { '--r-primary': '#059669', '--r-secondary': '#064e3b', '--r-accent': '#d1fae5', '--r-text': '#1f2937', '--r-muted': '#4b5563', '--r-bg': '#ffffff' },
 };
 
@@ -501,13 +549,16 @@ function renderPreview() {
 
   resume.innerHTML = `
     <header class="r-header">
-      <div class="r-name">${esc(state.fullName) || placeholder('Your Name')}</div>
-      <div class="r-title">${esc(state.jobTitle) || placeholder('Your Job Title')}</div>
-      <div class="r-contact">
-        ${state.email   ? `<span><i class="fa-solid fa-envelope"></i> ${esc(state.email)}</span>` : ''}
-        ${state.phone   ? `<span><i class="fa-solid fa-phone"></i> ${esc(state.phone)}</span>` : ''}
-        ${state.address ? `<span><i class="fa-solid fa-location-dot"></i> ${esc(state.address)}</span>` : ''}
-        ${!state.email && !state.phone && !state.address ? placeholder('Add contact info to display here') : ''}
+      ${state.photo ? `<img class="r-photo" src="${esc(state.photo)}" alt="Profile photo"/>` : ''}
+      <div class="r-header-text">
+        <div class="r-name">${esc(state.fullName) || placeholder('Your Name')}</div>
+        <div class="r-title">${esc(state.jobTitle) || placeholder('Your Job Title')}</div>
+        <div class="r-contact">
+          ${state.email   ? `<span><i class="fa-solid fa-envelope"></i> ${esc(state.email)}</span>` : ''}
+          ${state.phone   ? `<span><i class="fa-solid fa-phone"></i> ${esc(state.phone)}</span>` : ''}
+          ${state.address ? `<span><i class="fa-solid fa-location-dot"></i> ${esc(state.address)}</span>` : ''}
+          ${!state.email && !state.phone && !state.address ? placeholder('Add contact info to display here') : ''}
+        </div>
       </div>
     </header>
 
@@ -617,16 +668,47 @@ document.getElementById('fontDown').addEventListener('click', () => {
   renderPreview();
 });
 
+// Photo upload
+const photoPreview = document.getElementById('photoPreview');
+function updatePhotoPreview() {
+  if (state.photo) {
+    photoPreview.style.backgroundImage = `url("${state.photo}")`;
+    photoPreview.innerHTML = '';
+  } else {
+    photoPreview.style.backgroundImage = '';
+    photoPreview.innerHTML = '<i class="fa-solid fa-user"></i>';
+  }
+}
+document.getElementById('photoInput').addEventListener('change', e => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    state.photo = ev.target.result;
+    updatePhotoPreview();
+    renderPreview();
+  };
+  reader.readAsDataURL(file);
+});
+document.getElementById('removePhoto').addEventListener('click', () => {
+  state.photo = '';
+  document.getElementById('photoInput').value = '';
+  updatePhotoPreview();
+  renderPreview();
+});
+
 // Reset
 document.getElementById('resetBtn').addEventListener('click', () => {
   if (!confirm('Clear all fields and reset the resume?')) return;
   Object.assign(state, {
     fullName:'', jobTitle:'', email:'', phone:'', address:'', summary:'', skills:'',
-    experiences: [], educations: [],
+    experiences: [], educations: [], photo: '',
   });
   ['fullName','jobTitle','email','phone','address','summary','skills'].forEach(id => {
     document.getElementById(id).value = '';
   });
+  document.getElementById('photoInput').value = '';
+  updatePhotoPreview();
   renderExperienceForms();
   renderEducationForms();
   renderPreview();
