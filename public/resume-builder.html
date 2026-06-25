@@ -458,14 +458,17 @@ const state = {
   experiences: [],   // { id, title, company, start, end, desc }
   educations: [],    // { id, degree, institution, year }
   skills: '',
-  theme: 'blue',
+  theme: 'indigo',
   fontSize: 14,
+  photo: '',
 };
 
 const THEMES = {
-  blue:    { '--r-primary': '#2563eb', '--r-secondary': '#0f172a', '--r-accent': '#dbeafe', '--r-text': '#1f2937', '--r-muted': '#4b5563', '--r-bg': '#ffffff' },
+  indigo:  { '--r-primary': '#6366f1', '--r-secondary': '#1e1b4b', '--r-accent': '#e0e7ff', '--r-text': '#1f2937', '--r-muted': '#4b5563', '--r-bg': '#ffffff' },
+  rose:    { '--r-primary': '#e11d48', '--r-secondary': '#4c0519', '--r-accent': '#ffe4e6', '--r-text': '#1f2937', '--r-muted': '#525252', '--r-bg': '#fffaf7' },
+  teal:    { '--r-primary': '#0d9488', '--r-secondary': '#042f2e', '--r-accent': '#ccfbf1', '--r-text': '#1f2937', '--r-muted': '#475569', '--r-bg': '#ffffff' },
   gold:    { '--r-primary': '#b8860b', '--r-secondary': '#3b2f12', '--r-accent': '#fdf3d1', '--r-text': '#2c2415', '--r-muted': '#6b5a2e', '--r-bg': '#fffdf7' },
-  dark:    { '--r-primary': '#60a5fa', '--r-secondary': '#f8fafc', '--r-accent': '#1e293b', '--r-text': '#e2e8f0', '--r-muted': '#94a3b8', '--r-bg': '#0f172a' },
+  dark:    { '--r-primary': '#a78bfa', '--r-secondary': '#f8fafc', '--r-accent': '#1e293b', '--r-text': '#e2e8f0', '--r-muted': '#94a3b8', '--r-bg': '#0f172a' },
   emerald: { '--r-primary': '#059669', '--r-secondary': '#064e3b', '--r-accent': '#d1fae5', '--r-text': '#1f2937', '--r-muted': '#4b5563', '--r-bg': '#ffffff' },
 };
 
