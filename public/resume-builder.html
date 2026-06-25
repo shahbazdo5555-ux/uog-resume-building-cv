@@ -361,6 +361,19 @@
       <!-- Personal -->
       <div class="section">
         <div class="section-title"><i class="fa-solid fa-user"></i> Personal Info</div>
+
+        <div class="field">
+          <label>Profile Picture</label>
+          <div class="photo-upload">
+            <div class="photo-preview" id="photoPreview"><i class="fa-solid fa-user"></i></div>
+            <div class="photo-actions">
+              <label for="photoInput" class="btn btn-sm"><i class="fa-solid fa-upload"></i> Upload</label>
+              <button type="button" class="btn btn-sm btn-danger" id="removePhoto"><i class="fa-solid fa-xmark"></i> Remove</button>
+              <input type="file" id="photoInput" accept="image/*"/>
+            </div>
+          </div>
+        </div>
+
         <div class="field"><label>Full Name</label><input type="text" id="fullName" placeholder="Jane Doe"/></div>
         <div class="field"><label>Job Title / Tagline</label><input type="text" id="jobTitle" placeholder="Senior Product Designer"/></div>
         <div class="grid-2">
