@@ -549,13 +549,16 @@ function renderPreview() {
 
   resume.innerHTML = `
     <header class="r-header">
-      <div class="r-name">${esc(state.fullName) || placeholder('Your Name')}</div>
-      <div class="r-title">${esc(state.jobTitle) || placeholder('Your Job Title')}</div>
-      <div class="r-contact">
-        ${state.email   ? `<span><i class="fa-solid fa-envelope"></i> ${esc(state.email)}</span>` : ''}
-        ${state.phone   ? `<span><i class="fa-solid fa-phone"></i> ${esc(state.phone)}</span>` : ''}
-        ${state.address ? `<span><i class="fa-solid fa-location-dot"></i> ${esc(state.address)}</span>` : ''}
-        ${!state.email && !state.phone && !state.address ? placeholder('Add contact info to display here') : ''}
+      ${state.photo ? `<img class="r-photo" src="${esc(state.photo)}" alt="Profile photo"/>` : ''}
+      <div class="r-header-text">
+        <div class="r-name">${esc(state.fullName) || placeholder('Your Name')}</div>
+        <div class="r-title">${esc(state.jobTitle) || placeholder('Your Job Title')}</div>
+        <div class="r-contact">
+          ${state.email   ? `<span><i class="fa-solid fa-envelope"></i> ${esc(state.email)}</span>` : ''}
+          ${state.phone   ? `<span><i class="fa-solid fa-phone"></i> ${esc(state.phone)}</span>` : ''}
+          ${state.address ? `<span><i class="fa-solid fa-location-dot"></i> ${esc(state.address)}</span>` : ''}
+          ${!state.email && !state.phone && !state.address ? placeholder('Add contact info to display here') : ''}
+        </div>
       </div>
     </header>
 
